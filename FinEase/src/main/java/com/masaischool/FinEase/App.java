@@ -1,8 +1,19 @@
 package com.masaischool.FinEase;
 import Entity.*;
+import exception.SomethingWentWrong;
 import jakarta.persistence.*;
+import services.accountServices;
+import services.accountServicesImpl;
+import services.customers;
+import services.customersImpl;
 
+import java.time.LocalDate;
 import java.util.*;
+import java.util.function.Consumer;
+
+import org.hibernate.internal.build.AllowSysOut;
+
+import DAO.*;
 
 /**
  * Hello world!
@@ -11,14 +22,10 @@ import java.util.*;
 public class App 
 {
 	
-	static EntityManagerFactory emf = null;
-	
-	static {
-		emf = Persistence.createEntityManagerFactory("finease-connect");
-	}
 	
 	
-    public static void main( String[] args )
+	
+    public static void main( String[] args ) throws SomethingWentWrong
     {
     	
     	Scanner sc = new Scanner(System.in);
@@ -58,8 +65,8 @@ public class App
     }
 
 	
-
-	private static void adminFunctions(Scanner sc) {
+//    Admin UI
+	private static void adminFunctions(Scanner sc) throws SomethingWentWrong {
 		// TODO Auto-generated method stub
 		int session_id = adminLogin(sc);
 		if(session_id == 1) {
@@ -86,7 +93,29 @@ public class App
 			choice = sc.nextInt();
 			
 			switch(choice) {
+			case 1: customers c = new customersImpl();
+			List<Customer> lc = c.viewAllCustomerService();
+			lc.forEach(q -> System.out.println("Name : "+q.getName()+"/ Id : "+q.getId()+"/ Email : "+ q.getEmail()+"/ Mobile No. : "+ q.getMobile()));
+			break;
 			
+			case 2: customers c1 = new customersImpl();
+			System.out.println("Enter Customer ID");
+			int id = sc.nextInt();
+			Customer q = c1.viewCustomerByIdService(id);
+			System.out.println("Name : "+q.getName()+"/ Id : "+q.getId()+"/ Email : "+ q.getEmail()+"/ Mobile No. : "+ q.getMobile());
+			break;
+			
+			case 3: accountServices as = new accountServicesImpl();
+			List<Account> la = as.viewAllAccountService();
+			Consumer<List<Account>> con = (list)-> list.stream().forEach(s-> System.out.println("Account Number:"+s.getAccountNo()+"/ Account Holder:"+s.getName()+"/ Account Type:"+s.getType()+"/ Account Status:"+s.getStatus()));
+			con.accept(la);
+			break;
+			
+			case 4: accountServices as1 = new accountServicesImpl();
+					System.out.println("Enter Account Number");
+					String number = sc.next();
+					as1.viewAccountByNumberService(number);
+				break;
 			}
 			
 		}while(choice!=0);
@@ -116,38 +145,75 @@ public class App
 	}
 	
 	
+	static EntityManagerFactory emf = null;
+	static {
+		emf = Persistence.createEntityManagerFactory("finease-connect");
+	}
+	
+	
+	
 	
 	private static void addCustomer(Scanner sc) {
 		// TODO Auto-generated method stub
-//		Customer c = new Customer();
+		Customer c = new Customer();
+		
+		c.setName("arfafdt");
+		c.setEmail("easddfds");
+		c.setAge(13242);
+		c.setMobile("2323sdf234324");
+		c.setPassword("sadsdfsaddsa");
+		Address address = new Address("assdfd","asdfsd",324324);
+		List<Address> add = c.getLi();
+		address.setCustomer(c);
+		if(add == null) {
+			List<Address> ad = new ArrayList<>();
+			ad.add(address);
+			c.setLi(ad);
+		}
+		else {
+			add.add(address);
+			c.setLi(add);
+		}
+		
+		
+		
+//		Account a = new Account("asas","asass","asssaa","asass","sdf",c);
 //		
-//		c.setName("arfat");
-//		c.setEmail("easdds");
-//		c.setAge(12);
-//		c.setMobile("2323234324");
-//		c.setPassword("sadsaddsa");
-//		Address address = new Address("asd","asd",324324);
-//		List<Address> add = c.getLi();
-//		address.setCustomer(c);
-//		if(add == null) {
-//			List<Address> ad = new ArrayList<>();
-//			ad.add(address);
-//			c.setLi(ad);
+//		transaction t = new transaction(234324,LocalDate.parse("2020-09-09"),"asdasd","asdad",a);
+//		
+//		List<transaction> lt = a.getT();
+//		
+//		if(lt == null) {
+//			List<transaction> lt1 = new ArrayList<>();
+//			lt1.add(t);
+//			a.setT(lt1);
 //		}
 //		else {
-//			add.add(address);
-//			c.setLi(add);
+//			lt.add(t);
+//			a.setT(lt);
 //		}
-//		
-//		
 //	
-//		EntityManager em = emf.createEntityManager();
+//		Set<Account> sa = c.getAcc();
 //		
-//		EntityTransaction et = em.getTransaction();
-//		et.begin();
-//		em.persist(c);
-//		et.commit();
-//		em.close();
+//		if(sa == null) {
+//			Set<Account> ad = new HashSet<>();
+//			ad.add(a);
+//			c.setAcc(ad);
+//		}
+//		else {
+//			sa.add(a);
+//			c.setAcc(sa);
+//		}
+		
+		
+	
+		EntityManager em = emf.createEntityManager();
+		
+		EntityTransaction et = em.getTransaction();
+		et.begin();
+		em.persist(c);
+		et.commit();
+		em.close();
 		
 	}
 
