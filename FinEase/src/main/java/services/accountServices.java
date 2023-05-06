@@ -8,7 +8,7 @@ import exception.SomethingWentWrong;
 public interface accountServices {
 	public List<Account> viewAllAccountService() throws SomethingWentWrong;
 	public Account viewAccountByNumberService(String number) throws SomethingWentWrong;
-	public List<Account> viewAllInoperativeAccountService();
-	public List<Account> viewAllClosedAccountService();
-	public String changeStatusService();
+	public List<Account> viewAllInoperativeAccountService() throws SomethingWentWrong;
+	public List<Account> viewAllClosedAccountService() throws SomethingWentWrong;
+	public String changeStatusService(String number) throws SomethingWentWrong;
 }
