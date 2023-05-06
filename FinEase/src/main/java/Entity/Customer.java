@@ -1,6 +1,6 @@
 package Entity;
 
-import java.util.List;
+import java.util.*;
 import java.util.Set;
 
 import jakarta.persistence.*;
@@ -37,6 +37,13 @@ class Customer{
 		this.email = email;
 		this.password = password;
 		this.li = li;
+	}
+	
+	public Set<Account> getAcc() {
+		return acc;
+	}
+	public void setAcc(Set<Account> acc) {
+		this.acc = acc;
 	}
 	public int getId() {
 		return id;

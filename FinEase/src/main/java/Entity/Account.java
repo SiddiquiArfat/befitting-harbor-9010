@@ -15,12 +15,14 @@ public class Account {
 	String aadhar;
 	String accountNo;
 	
-	@OneToMany(mappedBy = "Account", cascade = CascadeType.ALL)
-	List<transaction> t;
-	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "customer_id")
-	Customer c;
+	private Customer customer;
+	
+	@OneToMany(mappedBy = "acc", cascade = CascadeType.ALL)
+	List<transaction> t;
+	
+	
 
 	public Account() {
 		super();
@@ -34,7 +36,7 @@ public class Account {
 		this.status = status;
 		this.aadhar = aadhar;
 		this.accountNo = accountNo;
-		this.c = c;
+		this.customer = c;
 	}
 
 	public int getId() {
@@ -94,11 +96,11 @@ public class Account {
 	}
 
 	public Customer getC() {
-		return c;
+		return customer;
 	}
 
 	public void setC(Customer c) {
-		this.c = c;
+		this.customer = c;
 	}
 	
 	
