@@ -114,9 +114,30 @@ public class App
 			case 4: accountServices as1 = new accountServicesImpl();
 					System.out.println("Enter Account Number");
 					String number = sc.next();
-					as1.viewAccountByNumberService(number);
-				break;
+					Account s = as1.viewAccountByNumberService(number);
+					System.out.println("Account Number:"+s.getAccountNo()+"/ Account Holder:"+s.getName()+"/ Account Type:"+s.getType()+"/ Account Status:"+s.getStatus());
+					int f = 0;
+					
+					do {
+					
+						System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+						System.out.println("Enter 1 to view transaction History ");
+						System.out.println("Else Enter 0");
+						System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+						f = sc.nextInt();
+						if(f == 1) {
+						List<transaction> t1 = s.getT();
+							t1.forEach(d1->System.out.println("Account No. "+d1.getAcountNum()+" / transaction ID: "+d1.getId()+" / To Account Number: "+d1.getToAccountNum()+" / Transaction Date: "+d1.getDate()));
+						}
+					}while(f!=0 || f>1);
+					break;
+					
+			case 5: accountServices as2 = new accountServicesImpl();
+					as2.changeStatusService();
+					
 			}
+			
+			
 			
 		}while(choice!=0);
 		
@@ -177,33 +198,33 @@ public class App
 		
 		
 		
-//		Account a = new Account("asas","asass","asssaa","asass","sdf",c);
-//		
-//		transaction t = new transaction(234324,LocalDate.parse("2020-09-09"),"asdasd","asdad",a);
-//		
-//		List<transaction> lt = a.getT();
-//		
-//		if(lt == null) {
-//			List<transaction> lt1 = new ArrayList<>();
-//			lt1.add(t);
-//			a.setT(lt1);
-//		}
-//		else {
-//			lt.add(t);
-//			a.setT(lt);
-//		}
-//	
-//		Set<Account> sa = c.getAcc();
-//		
-//		if(sa == null) {
-//			Set<Account> ad = new HashSet<>();
-//			ad.add(a);
-//			c.setAcc(ad);
-//		}
-//		else {
-//			sa.add(a);
-//			c.setAcc(sa);
-//		}
+		Account a = new Account("asas","asass","asssaa","asass","sdf",c);
+		
+		transaction t = new transaction(234324,LocalDate.parse("2020-09-09"),"asdasd","asdad",a);
+		
+		List<transaction> lt = a.getT();
+		
+		if(lt == null) {
+			List<transaction> lt1 = new ArrayList<>();
+			lt1.add(t);
+			a.setT(lt1);
+		}
+		else {
+			lt.add(t);
+			a.setT(lt);
+		}
+	
+		Set<Account> sa = c.getAcc();
+		
+		if(sa == null) {
+			Set<Account> ad = new HashSet<>();
+			ad.add(a);
+			c.setAcc(ad);
+		}
+		else {
+			sa.add(a);
+			c.setAcc(sa);
+		}
 		
 		
 	

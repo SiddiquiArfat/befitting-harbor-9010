@@ -18,9 +18,12 @@ public class accountServicesImpl implements  accountServices{
 	}
 
 	@Override
-	public Account viewAccountByNumberService(String number) {
+	public Account viewAccountByNumberService(String number) throws SomethingWentWrong {
 		// TODO Auto-generated method stub
-		return null;
+		account a = new accountImpl();
+		Account la = a.viewAccountByNumber(number);
+		return la;
+		
 	}
 
 	@Override

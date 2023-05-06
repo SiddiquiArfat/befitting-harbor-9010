@@ -37,10 +37,13 @@ public class accountImpl implements account{
 		try {
 			
 			em = utility.utility.getEm();
-			Query q = em.createQuery("FROM Account a where e.accountNo");
+			Query q = em.createQuery("FROM Account a where a.accountNo = :para");
 			
-			Account a = (Account) q.getSingleResult();
-			return a;
+			q.setParameter("para", number);
+			
+			
+			Account acc = (Account) q.getSingleResult();
+			return acc;
 			
 		}catch(Exception e) {
 			throw new SomethingWentWrong("Account Number did'nt in database");
