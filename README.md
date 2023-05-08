@@ -1,6 +1,8 @@
 # befitting-harbor-9010
 [FinEase](https://user-images.githubusercontent.com/119488008/236867253-f23c70ce-0b9f-46a9-a4de-f3dcb9a69000.png)
 
+[ER-Diagram](https://drive.google.com/file/d/1Cv4nlHJhECcYgYeCuqAOrCWtUzpRLVQ5/view?usp=sharing)
+
 Users of this project
 -> Adminstrator
 -> Customer
