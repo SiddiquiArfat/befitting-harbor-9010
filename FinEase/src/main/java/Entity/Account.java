@@ -12,9 +12,9 @@ public class Account {
 	String name;
 	String type;
 	String status;
-	String aadhar;
 	String accountNo;
-	
+	double amount;
+	int pin;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
@@ -28,15 +28,35 @@ public class Account {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	
 
-	public Account(String name, String type, String status, String aadhar, String accountNo, Customer c) {
+
+	public Account(String name, String type, String status, String accountNo, double amount, int pin, Customer customer,
+			List<transaction> t) {
 		super();
 		this.name = name;
 		this.type = type;
 		this.status = status;
-		this.aadhar = aadhar;
+		this.accountNo = accountNo;
+		this.amount = amount;
+		this.pin = pin;
+		this.customer = customer;
+		this.t = t;
+	}
+
+
+
+
+	public Account(String name, String type, String status, int pin, String accountNo,Customer c) {
+		super();
+		this.name = name;
+		this.type = type;
+		this.status = status;
+		this.pin = pin;
 		this.accountNo = accountNo;
 		this.customer = c;
+		this.amount =0;
 	}
 
 	public int getId() {
@@ -71,12 +91,12 @@ public class Account {
 		this.status = status;
 	}
 
-	public String getAadhar() {
-		return aadhar;
+	public int getPin() {
+		return pin;
 	}
 
-	public void setAadhar(String aadhar) {
-		this.aadhar = aadhar;
+	public void setPin(int pin) {
+		this.pin = pin;
 	}
 
 	public String getAccountNo() {
@@ -103,7 +123,27 @@ public class Account {
 		this.customer = c;
 	}
 	
-	
+	public double getAmount() {
+		return amount;
+	}
+
+
+
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+
+
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
 	
 	
 	

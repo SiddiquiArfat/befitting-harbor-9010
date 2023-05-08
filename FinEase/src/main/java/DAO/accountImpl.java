@@ -1,9 +1,14 @@
 package DAO;
 
+
+import java.util.*;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.hibernate.mapping.Set;
+
 import Entity.Account;
+import Entity.Customer;
 import Entity.transaction;
 import exception.SomethingWentWrong;
 import jakarta.persistence.*;
@@ -136,6 +141,58 @@ public class accountImpl implements account{
 		}finally {
 			em.close();
 		}
+	}
+
+	@Override
+	public Account signInAcc(java.util.Set<Account> acc, String number, int pin) throws SomethingWentWrong {
+		// TODO Auto-generated method stub
+		
+		try {
+			for(Account g: acc) {
+				if(g.getAccountNo().equals(number) && g.getPin() == pin){
+					Account h = g;
+					return h;
+				}
+			}
+		}
+		catch(Exception e) {
+			throw new SomethingWentWrong("Something Went Wrong");
+		}
+		
+		return null;
+	}
+
+	@Override
+	public String addAccount(String name, String status, String type, String acc, int pin, Customer c) throws SomethingWentWrong {
+		// TODO Auto-generated method stub
+		java.util.Set<Account> d = c.getAcc();
+		for(Account g: d) {
+			if(g.getType().equals(type) && g.getStatus().equals("active")) {
+				throw new SomethingWentWrong("You Already have one "+type+" account");
+			}
+		}
+		Account a = new Account(name,type,status,pin,acc,c);
+		EntityManager em = null;
+		if(d == null) {
+			java.util.Set<Account> n = new HashSet<>();
+			n.add(a);
+			c.setAcc(n);
+		}else {
+			d.add(a);
+			c.setAcc(d);
+		}
+		try {
+			
+			em = utility.utility.getEm();
+			em.getTransaction().begin();
+			em.merge(c);
+			em.getTransaction().commit();
+		}catch(Exception e) {
+			throw new SomethingWentWrong("Something Went Wrong");
+		}finally {
+			em.close();
+		}
+		return "Your Account Add "+pin+" is your Account pin Please kept it save";
 	}
 	
 }
