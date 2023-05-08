@@ -18,27 +18,40 @@ public class accountServicesImpl implements  accountServices{
 	}
 
 	@Override
-	public Account viewAccountByNumberService(String number) {
+	public Account viewAccountByNumberService(String number) throws SomethingWentWrong {
 		// TODO Auto-generated method stub
-		return null;
+		account a = new accountImpl();
+		Account la = a.viewAccountByNumber(number);
+		return la;
+		
 	}
 
 	@Override
-	public List<Account> viewAllInoperativeAccountService() {
+	public List<Account> viewAllInoperativeAccountService() throws SomethingWentWrong {
 		// TODO Auto-generated method stub
-		return null;
+		
+		account a = new accountImpl();
+		List<Account> la = a.viewAllInoperativeAccount();
+		return la;
+		
+		
 	}
 
 	@Override
-	public List<Account> viewAllClosedAccountService() {
+	public List<Account> viewAllClosedAccountService() throws SomethingWentWrong {
 		// TODO Auto-generated method stub
-		return null;
+		
+		account a = new accountImpl();
+		List<Account> la = a.viewAllClosedAccount();
+		return la;
 	}
 
 	@Override
-	public String changeStatusService() {
+	public String changeStatusService(String number) throws SomethingWentWrong {
 		// TODO Auto-generated method stub
-		return null;
+		account df = new accountImpl();
+		return df.changeStatus(number);
+		
 	}
 
 }

@@ -6,6 +6,8 @@ import services.accountServices;
 import services.accountServicesImpl;
 import services.customers;
 import services.customersImpl;
+import services.transactionServiceImpl;
+import services.transactionServices;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -95,6 +97,9 @@ public class App
 			switch(choice) {
 			case 1: customers c = new customersImpl();
 			List<Customer> lc = c.viewAllCustomerService();
+			if(lc == null) {
+				throw new SomethingWentWrong("No Record Found");
+			}
 			lc.forEach(q -> System.out.println("Name : "+q.getName()+"/ Id : "+q.getId()+"/ Email : "+ q.getEmail()+"/ Mobile No. : "+ q.getMobile()));
 			break;
 			
@@ -102,11 +107,17 @@ public class App
 			System.out.println("Enter Customer ID");
 			int id = sc.nextInt();
 			Customer q = c1.viewCustomerByIdService(id);
+			if(q == null) {
+				throw new SomethingWentWrong("No Record Found");
+			}
 			System.out.println("Name : "+q.getName()+"/ Id : "+q.getId()+"/ Email : "+ q.getEmail()+"/ Mobile No. : "+ q.getMobile());
 			break;
 			
 			case 3: accountServices as = new accountServicesImpl();
 			List<Account> la = as.viewAllAccountService();
+			if(la == null) {
+				throw new SomethingWentWrong("No Record Found");
+			}
 			Consumer<List<Account>> con = (list)-> list.stream().forEach(s-> System.out.println("Account Number:"+s.getAccountNo()+"/ Account Holder:"+s.getName()+"/ Account Type:"+s.getType()+"/ Account Status:"+s.getStatus()));
 			con.accept(la);
 			break;
@@ -114,9 +125,76 @@ public class App
 			case 4: accountServices as1 = new accountServicesImpl();
 					System.out.println("Enter Account Number");
 					String number = sc.next();
-					as1.viewAccountByNumberService(number);
+					Account s = as1.viewAccountByNumberService(number);
+					System.out.println("Account Number:"+s.getAccountNo()+"/ Account Holder:"+s.getName()+"/ Account Type:"+s.getType()+"/ Account Status:"+s.getStatus());
+					int f = 0;
+					
+					do {
+					
+						System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+						System.out.println("Enter 1 to view transaction History ");
+						System.out.println("Else Enter 0");
+						System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+						f = sc.nextInt();
+						if(f == 1) {
+						List<transaction> t1 = s.getT();
+						if(t1 == null) {
+							throw new SomethingWentWrong("No Record Found");
+						}
+							t1.forEach(d1->System.out.println("Account No. "+d1.getAcountNum()+" / transaction ID: "+d1.getId()+" / To Account Number: "+d1.getToAccountNum()+" / Transaction Date: "+d1.getDate()));
+						}
+					}while(f!=0 || f>1);
+					break;
+					
+			case 5: accountServices as2 = new accountServicesImpl();
+					System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+					System.out.println("Enter Account Number");
+					System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+					String accNumber = sc.next();
+					System.out.println(as2.changeStatusService(accNumber));  
+					System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+					break;
+			case 7: accountServices as3 = new accountServicesImpl();
+				List<Account> la2 = as3.viewAllClosedAccountService();
+				System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+				
+				if(la2 == null) {
+					throw new SomethingWentWrong("No Record Found");
+				}
+				Consumer<List<Account>> con1 = (list)-> list.stream().forEach(s1-> System.out.println("Account Number:"+s1.getAccountNo()+"/ Account Holder:"+s1.getName()+"/ Account Type:"+s1.getType()+"/ Account Status:"+s1.getStatus()));
+				con1.accept(la2);
+				System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+				break;
+			case 6: accountServices as4 = new accountServicesImpl();
+				List<Account> la3 = as4.viewAllInoperativeAccountService();
+				System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+				if(la3 == null) {
+					throw new SomethingWentWrong("No Record Found");
+				}
+				Consumer<List<Account>> con2 = (list)-> list.stream().forEach(s2-> System.out.println("Account Number:"+s2.getAccountNo()+"/ Account Holder:"+s2.getName()+"/ Account Type:"+s2.getType()+"/ Account Status:"+s2.getStatus()));
+				con2.accept(la3);
+				System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+				break;
+			case 8: transactionServices t = new  transactionServiceImpl();
+					System.out.println("Enter Starting Date (YYYY/MM/DD)");
+					
+					String startDate = sc.next();
+					
+					System.out.println("Enter Ending Date (YYYY/MM/DD)");
+					String endDate = sc.next();
+					List<transaction> lt = t.viewAllTransactionDayWiseService(startDate,endDate);
+					if(lt == null) {
+						throw new SomethingWentWrong("No Record Found");
+					}
+					Consumer<List<transaction>> con5 = (list)-> list.stream().forEach(s6-> System.out.println("Account Number:"+s6.getAcountNum()+"/ Amount :"+s6.getAmount()+"/ transaction:"+s6.getId()+"/ paid to:"+s6.getToAccountNum()));
+					con5.accept(lt);
+					System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+					
 				break;
 			}
+			
+			
+			
 			
 		}while(choice!=0);
 		
@@ -177,33 +255,33 @@ public class App
 		
 		
 		
-//		Account a = new Account("asas","asass","asssaa","asass","sdf",c);
-//		
-//		transaction t = new transaction(234324,LocalDate.parse("2020-09-09"),"asdasd","asdad",a);
-//		
-//		List<transaction> lt = a.getT();
-//		
-//		if(lt == null) {
-//			List<transaction> lt1 = new ArrayList<>();
-//			lt1.add(t);
-//			a.setT(lt1);
-//		}
-//		else {
-//			lt.add(t);
-//			a.setT(lt);
-//		}
-//	
-//		Set<Account> sa = c.getAcc();
-//		
-//		if(sa == null) {
-//			Set<Account> ad = new HashSet<>();
-//			ad.add(a);
-//			c.setAcc(ad);
-//		}
-//		else {
-//			sa.add(a);
-//			c.setAcc(sa);
-//		}
+		Account a = new Account("asas","asass","asssaa","asass","sdf",c);
+		
+		transaction t = new transaction(234324,LocalDate.parse("2020-09-09"),"asdasd","asdad",a);
+		
+		List<transaction> lt = a.getT();
+		
+		if(lt == null) {
+			List<transaction> lt1 = new ArrayList<>();
+			lt1.add(t);
+			a.setT(lt1);
+		}
+		else {
+			lt.add(t);
+			a.setT(lt);
+		}
+	
+		Set<Account> sa = c.getAcc();
+		
+		if(sa == null) {
+			Set<Account> ad = new HashSet<>();
+			ad.add(a);
+			c.setAcc(ad);
+		}
+		else {
+			sa.add(a);
+			c.setAcc(sa);
+		}
 		
 		
 	

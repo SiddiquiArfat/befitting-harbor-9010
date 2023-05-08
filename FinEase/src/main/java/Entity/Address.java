@@ -11,7 +11,7 @@ public class Address {
 	String state;
 	int zipcode;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "customer_id")
 	private Customer customer;
 	
