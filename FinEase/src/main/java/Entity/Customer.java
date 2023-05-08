@@ -15,6 +15,8 @@ class Customer{
 	int age;
 	String mobile;
 	String email;
+	String userName;
+	
 	String password;
 	
 	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
@@ -29,8 +31,9 @@ class Customer{
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public Customer(String name, int age, String mobile, String email, String password, List<Address> li) {
+	public Customer(String name,String userName ,int age, String mobile, String email, String password, List<Address> li) {
 		super();
+		this.userName = userName;
 		this.name = name;
 		this.age = age;
 		this.mobile = mobile;
@@ -39,6 +42,14 @@ class Customer{
 		this.li = li;
 	}
 	
+	
+	
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 	public Set<Account> getAcc() {
 		return acc;
 	}

@@ -26,4 +26,34 @@ public class customersImpl implements customers{
 		return (Customer) c1.viewCustomerbyId(id);
 	}
 
+	@Override
+	public Customer loginCustomer(String username, String passwodrd) throws SomethingWentWrong {
+		// TODO Auto-generated method stub
+		customer c = new customerImpl();
+		
+		return c.loginCustomers(username, passwodrd);
+		
+	}
+
+	@Override
+	public String updateDetails(String name, String mobile, String city, String state, int zipcode,Customer c)
+			throws SomethingWentWrong {
+		// TODO Auto-generated method stub
+		
+		customer f = new customerImpl();
+		f.updateDetails(name, mobile, city, state, zipcode,c);
+		
+		return null;
+	}
+
+	@Override
+	public String changePassword(Customer c, String pass) throws SomethingWentWrong {
+		// TODO Auto-generated method stub
+		
+		customer c4 = new customerImpl();
+		return c4.changePassword(c, pass);
+		
+		
+	}
+
 }

@@ -51,7 +51,7 @@ public class App
 					break;
 
 				case 3:
-					addCustomer(sc);
+					adddCustomer(sc);
 					break;
 
 				case 0:
@@ -87,8 +87,6 @@ public class App
 			System.out.println("Enter (6) -------> view all inoperative accounts");
 			System.out.println("Enter (7) -------> view all closed accounts");
 			System.out.println("Enter (8) -------> view the transaction report for a day range for all accounts.");
-			System.out.println("Enter (9) -------> See all high magnitude transaction for a day i.e. only those transaction in which\r\n"
-					+ "more than 49999 is transferred");
 			
 			System.out.println("Enter (0) -------> Logout from account");
 			System.out.println("---------------------------------------------------------------------------------------------------------------------------");
@@ -191,6 +189,12 @@ public class App
 					System.out.println("---------------------------------------------------------------------------------------------------------------------------");
 					
 				break;
+			case 0: System.out.println("Log out");
+			break;
+			default:
+				throw new IllegalArgumentException("Invalid Selection");
+				
+			
 			}
 			
 			
@@ -219,7 +223,6 @@ public class App
 		else {
 			throw new IllegalArgumentException("Wrong Credentials!!!! try again with right credentials");
 		}
-
 	}
 	
 	
@@ -229,62 +232,34 @@ public class App
 	}
 	
 	
-	
-	
-	private static void addCustomer(Scanner sc) {
-		// TODO Auto-generated method stub
-		Customer c = new Customer();
+	private static String adddCustomer(Scanner sc) {
 		
-		c.setName("arfafdt");
-		c.setEmail("easddfds");
-		c.setAge(13242);
-		c.setMobile("2323sdf234324");
-		c.setPassword("sadsdfsaddsa");
-		Address address = new Address("assdfd","asdfsd",324324);
-		List<Address> add = c.getLi();
-		address.setCustomer(c);
-		if(add == null) {
-			List<Address> ad = new ArrayList<>();
-			ad.add(address);
-			c.setLi(ad);
-		}
-		else {
-			add.add(address);
-			c.setLi(add);
-		}
+		System.out.println("Enter name");
+		String name = sc.next();
+		System.out.println("Enter Username");
+		String username = sc.next();
+		System.out.println("Enter Email");
+		String Email = sc.next();
+		System.out.println("Enter Age");
+		int age = sc.nextInt();
+		System.out.println("Enter Mobile Number");
+		String number = sc.next();
+		System.out.println("Enter password");
+		String password = sc.next();
 		
+		System.out.println("Enter City");
+		String city = sc.next();
 		
+		System.out.println("Enter state");
+		String state = sc.next();
+		System.out.println("Enter zipcode");
+		int code = sc.nextInt();
 		
-		Account a = new Account("asas","asass","asssaa","asass","sdf",c);
+		List<Address> li = new ArrayList<>();
+		Address a = new Address(city,state,code);
+		li.add(a);
+		Customer c = new Customer(name,username,age,number,Email,password,li);
 		
-		transaction t = new transaction(234324,LocalDate.parse("2020-09-09"),"asdasd","asdad",a);
-		
-		List<transaction> lt = a.getT();
-		
-		if(lt == null) {
-			List<transaction> lt1 = new ArrayList<>();
-			lt1.add(t);
-			a.setT(lt1);
-		}
-		else {
-			lt.add(t);
-			a.setT(lt);
-		}
-	
-		Set<Account> sa = c.getAcc();
-		
-		if(sa == null) {
-			Set<Account> ad = new HashSet<>();
-			ad.add(a);
-			c.setAcc(ad);
-		}
-		else {
-			sa.add(a);
-			c.setAcc(sa);
-		}
-		
-		
-	
 		EntityManager em = emf.createEntityManager();
 		
 		EntityTransaction et = em.getTransaction();
@@ -293,9 +268,360 @@ public class App
 		et.commit();
 		em.close();
 		
+		return "Customer Added Successfully Added";
+		
+	}
+	
+	
+	
+//	private static void addCustomer(Scanner sc) {
+//		// TODO Auto-generated method stub
+//		Customer c = new Customer();
+//		
+//		c.setName("arfafdt");
+//		c.setUserName("arfat123");
+//		c.setEmail("easddfds");
+//		c.setAge(13242);
+//		c.setMobile("2323sdf234324");
+//		c.setPassword("sadsdfsaddsa");
+//		Address address = new Address("assdfd","asdfsd",324324);
+//		List<Address> add = c.getLi();
+//		address.setCustomer(c);
+//		if(add == null) {
+//			List<Address> ad = new ArrayList<>();
+//			ad.add(address);
+//			c.setLi(ad);
+//		}
+//		else {
+//			add.add(address);
+//			c.setLi(add);
+//		}
+//		
+//		
+//		
+//		Account a = new Account("asas","asass","asssaa",123,"sdf",c);
+//		
+//		transaction t = new transaction(234324,LocalDate.parse("2020-09-09"),"asdasd","asdad",a);
+//		
+//		List<transaction> lt = a.getT();
+//		
+//		if(lt == null) {
+//			List<transaction> lt1 = new ArrayList<>();
+//			lt1.add(t);
+//			a.setT(lt1);
+//		}
+//		else {
+//			lt.add(t);
+//			a.setT(lt);
+//		}
+//	
+//		Set<Account> sa = c.getAcc();
+//		
+//		if(sa == null) {
+//			Set<Account> ad = new HashSet<>();
+//			ad.add(a);
+//			c.setAcc(ad);
+//		}
+//		else {
+//			sa.add(a);
+//			c.setAcc(sa);
+//		}
+//		
+//		
+//	
+//		EntityManager em = emf.createEntityManager();
+//		
+//		EntityTransaction et = em.getTransaction();
+//		et.begin();
+//		em.persist(c);
+//		et.commit();
+//		em.close();
+//		
+//	}
+	
+	
+	
+	
+//	customer funcationality
+	
+	
+	
+
+	private static void customerFuntions(Scanner sc) throws SomethingWentWrong {
+		// TODO Auto-generated method stub
+		System.out.println("Please Enter Your credentials");
+		Customer c = customerLogin(sc);
+		
+		if(c!=null) {
+			System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+			System.out.println("Successfully Loged In");
+		}
+		int choice = 0;
+		do {
+			System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+			System.out.println("Enter (1) -------> Upadte Details of Customer ");
+			System.out.println("Enter (2) -------> Change Password");
+			System.out.println("Enter (3) -------> Sign in to Account");
+			System.out.println("Enter (4) -------> create new Account");
+			System.out.println("Enter (0) -------> Logout from account");
+			System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+			choice = sc.nextInt();
+			
+			switch(choice) {
+			case 1: updateDetails(sc,c);
+			System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+			System.out.println("Details updated Successfully");
+			System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+			
+			break;
+			
+			case 2:
+				System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+				System.out.println(changePassword(sc,c));
+			System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+			break;
+			
+			case 3: 
+				System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+				
+				Set<Account> t = c.getAcc();
+				
+				if(t == null) {
+					throw new SomethingWentWrong("You Don't have any Account Create Account First");
+				}
+				
+				System.out.println("Your Accounts");
+				t.forEach((s) -> System.out.println("Account No. -> "+s.getAccountNo()+" Amount -> "+s.getAmount()));
+				
+				System.out.println("Enter Account Number ");
+				String number = sc.next();
+				System.out.println("Enter PIN ");
+				int pin = sc.nextInt();
+				Account a = signInAccount(t,number,pin);
+				
+				if(a == null) {
+					throw new SomethingWentWrong("Invalid Credentials");
+				}
+				else if(a.getStatus().equals("Non-Operative")) {
+					throw new SomethingWentWrong("Non-Operative Account");
+				}
+				else if(a.getStatus().equals("Closed")) {
+					throw new SomethingWentWrong("Closed Account");
+				}
+				System.out.println("Login Successfull");
+				
+				int b = 0;
+				do {
+					System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+					System.out.println("Enter (1) ------> Deposit");
+					System.out.println("Enter (2) ------> Withdraw");
+					System.out.println("Enter (3) ------> Transfer to bank account");
+					System.out.println("Enter (4) ------> Closed Account");
+					System.out.println("Enter (5) ------> Check balance");
+					System.out.println("Enter (6) ------> Transaction History By Day Range");
+					System.out.println("Enter (0) ------> Log out");
+					System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+					
+					b = sc.nextInt();
+					
+					switch(b) {
+					
+					case 1:
+						System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+						System.out.println(deposite(a,sc));
+						System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+						break;
+					
+					case 2: 
+						System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+						System.out.println(withdraw(a,sc));
+						System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+						break;
+					
+					case 3: 
+						System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+						System.out.println(transferMoney(a,sc,c));
+						System.out.println("Money Transfered");
+						break;
+						
+					case 4: System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+					System.out.println(delete(a,sc,c));
+					b = 0;
+					System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+					break;
+					case 5: System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+							System.out.println("-> "+a.getAccountNo()+" Amount -> "+a.getAmount());
+							System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+							break;
+					case 6: System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+					History(a,sc);
+					System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+					break;
+					
+					case 0: System.out.println("Log out");
+					break;
+					
+					default:
+						throw new IllegalArgumentException("Invalid Selection");
+					
+					}	
+					
+				}while(b!=0);
+				System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+				System.out.println("Successfully log out");
+				break;
+				
+			case 4: 
+				createAccount(c,sc);
+				System.out.println("Account Created");
+				choice = 0;
+				break;
+			
+			case 0: System.out.println("Log out");
+			break;
+				
+			default:
+				throw new IllegalArgumentException("Invalid Selection");
+			
+			}
+			
+		}while(choice!=0);
+		
+		
+		
+	}
+	
+	private static void History(Account a, Scanner sc) throws SomethingWentWrong {
+	// TODO Auto-generated method stub
+	transactionServices t = new transactionServiceImpl();
+	t.history(a,sc);
+}
+
+
+	private static String delete(Account a, Scanner sc, Customer c) {
+		
+		EntityManager em = utility.utility.getEm();
+		a.setStatus("Closed");
+		em.getTransaction().begin();
+		em.merge(a);
+		em.getTransaction().commit();
+		em.close();
+		
+		return "Account Closed";
+		// TODO Auto-generated method stub
+		
 	}
 
-	private static void customerFuntions(Scanner sc) {
+
+	private static String transferMoney(Account a, Scanner sc,Customer c) throws SomethingWentWrong {
+		// TODO Auto-generated method stub
+		System.out.println("Enter Amount");
+		double amount = sc.nextDouble();
+		
+		if(a.getAmount()<amount) {
+			throw new SomethingWentWrong("You Don't have enough Balance");
+		}
+		EntityManager em = utility.utility.getEm();
+		Query q = em.createQuery("From Account a");
+		List<Account> lt = q.getResultList();
+		if(lt != null) {
+			System.out.println("List Of Accounts : ");
+		}
+		for(Account m : lt) {
+			if(m.getId()!=a.getId() && !m.getStatus().equals("Non-Operative") && !m.getStatus().equals("Closed")) {
+				System.out.println("-> "+m.getAccountNo());
+			}
+		}
+		System.out.println("Please Enter Account Number you want to transfer money");
+		String AccNum = sc.next();
+		transactionServices ts = new transactionServiceImpl();
+		
+		return ts.transaction(a,amount,AccNum,c);
+		 
+		
+	}
+
+
+	private static String withdraw(Account a, Scanner sc) throws SomethingWentWrong {
+		// TODO Auto-generated method stub
+		System.out.println("Enter Amount");
+		double amount = sc.nextInt();
+		
+		transactionServices ts = new transactionServiceImpl();
+		
+		return ts.withdraw(a,amount);
+	}
+
+
+	private static String deposite(Account a, Scanner sc) throws SomethingWentWrong {
+		// TODO Auto-generated method stub
+		
+		System.out.println("Enter Amount");
+		double amount = sc.nextInt();
+		
+		transactionServices ts = new transactionServiceImpl();
+		
+		return ts.deposit(a,amount);
+
+	}
+
+
+	private static void createAccount(Customer c,Scanner sc) throws SomethingWentWrong {
+		String name = c.getName();
+		String Status = "active";
+		System.out.println("Please Enter type of Account You Want to Open (saving/loan account)");
+		String type = sc.next();
+		String Acc = String.valueOf(utility.generator.generateAcc());
+		int pin = Integer.parseInt(utility.generator.pin());
+		accountServices as = new accountServicesImpl();
+		System.out.println(as.addAccountService(name,Status,type,Acc,pin,c));
+	}
+
+
+	private static Account signInAccount(Set<Account> t, String number, int pin) throws SomethingWentWrong {
+		// TODO Auto-generated method stub
+		accountServices as = new accountServicesImpl(); 
+		return as.signIn(t, number, pin);
+	}
+
+
+	private static String changePassword(Scanner sc, Customer c) throws SomethingWentWrong {
+		// TODO Auto-generated method stub
+		System.out.println("Please Enter New Password");
+		String password = sc.next();
+		customers cs = new customersImpl();
+		return cs.changePassword(c, password);
+	}
+
+
+	private static void updateDetails(Scanner sc, Customer c) throws SomethingWentWrong {
+		// TODO Auto-generated method stub
+		System.out.println("Enter new Name");
+		String name  =sc.next();
+		System.out.println("Enter new Mobile Number");
+		String number = sc.next();
+		System.out.println("Enter new Address");
+		System.out.println("Enter City");
+		String city = sc.next();
+		System.out.println("Enter state");
+		String state = sc.next();
+		System.out.println("Entrer zipcode");
+		int code = sc.nextInt(); 
+		customers cs = new customersImpl();
+		cs.updateDetails(name, number, city, state, code,c);
+		
+	}
+
+
+	private static Customer customerLogin(Scanner sc) throws SomethingWentWrong {
+		System.out.println("Enter UserName Here : ");
+		String username = sc.next();
+		System.out.println("Enter password");
+		String password = sc.next();
+		customers c = new customersImpl();
+		Customer c1 = c.loginCustomer(username, password);
+		return c1;
+	
 		// TODO Auto-generated method stub
 		
 	}

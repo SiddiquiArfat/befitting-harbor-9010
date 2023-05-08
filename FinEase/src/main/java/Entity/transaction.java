@@ -10,10 +10,15 @@ public class transaction {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
 	
-	int amount;
+	double amount;
 	LocalDate date;
 	String acountNum;
 	String toAccountNum;
+	String fromAccountNum;
+	boolean withdraw;
+	boolean deposite;
+	
+	
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "account_id")
@@ -23,7 +28,41 @@ public class transaction {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public transaction(int amount, LocalDate date, String acountNum, String toAccountNum,Account acc) {
+	
+	
+	
+	
+	public transaction(double amount, LocalDate date, String acountNum, String fromAccountNum, boolean deposite, Account acc) {
+		super();
+		this.amount = amount;
+		this.date = date;
+		this.acountNum = acountNum;
+		this.fromAccountNum = fromAccountNum;
+		
+		this.deposite = deposite;
+		this.acc = acc;
+	}
+
+
+
+
+	public transaction(double amount, LocalDate date, String acountNum, String toAccountNum, boolean withdraw,
+			boolean deposite, Account acc) {
+		super();
+		
+		this.amount = amount;
+		this.date = date;
+		this.acountNum = acountNum;
+		this.toAccountNum = toAccountNum;
+		this.withdraw = withdraw;
+		this.deposite = deposite;
+		this.acc = acc;
+	}
+
+
+
+
+	public transaction(double amount, LocalDate date, String acountNum, String toAccountNum,Account acc) {
 		super();
 		this.amount = amount;
 		this.date = date;
@@ -35,6 +74,56 @@ public class transaction {
 	
 	
 	
+	
+	public String getFromAccountNum() {
+		return fromAccountNum;
+	}
+
+
+
+
+	public void setFromAccountNum(String fromAccountNum) {
+		this.fromAccountNum = fromAccountNum;
+	}
+
+
+
+
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+
+
+
+
+	public boolean isWithdraw() {
+		return withdraw;
+	}
+
+
+
+
+	public void setWithdraw(boolean withdraw) {
+		this.withdraw = withdraw;
+	}
+
+
+
+
+	public boolean isDeposite() {
+		return deposite;
+	}
+
+
+
+
+	public void setDeposite(boolean deposite) {
+		this.deposite = deposite;
+	}
+
+
+
+
 	public Account getAcc() {
 		return acc;
 	}
@@ -47,7 +136,7 @@ public class transaction {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getAmount() {
+	public double getAmount() {
 		return amount;
 	}
 	public void setAmount(int amount) {
@@ -70,6 +159,16 @@ public class transaction {
 	}
 	public void setToAccountNum(String toAccountNum) {
 		this.toAccountNum = toAccountNum;
+	}
+
+
+
+
+	@Override
+	public String toString() {
+		return "transaction [id=" + id + ", amount=" + amount + ", date=" + date + ", acountNum=" + acountNum
+				+ ", toAccountNum=" + toAccountNum + ", fromAccountNum=" + fromAccountNum + ", withdraw=" + withdraw
+				+ ", deposite=" + deposite + ", acc=" + acc + "]";
 	}
 	
 	
