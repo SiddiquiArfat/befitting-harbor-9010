@@ -257,8 +257,10 @@ public class App
 		
 		List<Address> li = new ArrayList<>();
 		Address a = new Address(city,state,code);
-		li.add(a);
 		Customer c = new Customer(name,username,age,number,Email,password,li);
+		a.setCustomer(c);
+		li.add(a);
+		
 		
 		EntityManager em = emf.createEntityManager();
 		
