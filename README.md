@@ -7,6 +7,11 @@ Users of this project
 -> Adminstrator
 -> Customer
 
+Tech Stack : 
+1) Java
+2) Hibernet
+3) SQL
+
 The Roles of Accountant:
 
 1) Login using his/her username and password
